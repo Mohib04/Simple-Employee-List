@@ -20,41 +20,41 @@ defined('ABSPATH') or die('No Script Available');
 /* 
     Enqueue Style and Scripts into backend
 */
-function admin_employee_style(){
+function sel_admin_style(){
     wp_enqueue_style( 'bootstrap', plugin_dir_url( __FILE__ ).'assets/css/bootstrap.min.css' );
     wp_enqueue_script( 'bootstrap',  plugin_dir_url( __FILE__ ).'assets/js/bootstrap.min.js', array('jquery') );
 }
-add_action('admin_enqueue_scripts', 'admin_employee_style' );
+add_action('admin_enqueue_scripts', 'sel_admin_style' );
 
 /* 
     Enqueue Style and Scripts into frontend
 */
-function frontend_employee_style(){
+function sel_frontend_style(){
     wp_enqueue_style( 'bootstrap', plugin_dir_url( __FILE__ ).'assets/css/bootstrap.min.css' );
     wp_enqueue_script( 'bootstrap',  plugin_dir_url( __FILE__ ).'assets/js/bootstrap.min.js', array('jquery') );
 }
-add_action('wp_enqueue_scripts', 'frontend_employee_style' );
+add_action('wp_enqueue_scripts', 'sel_frontend_style' );
 
 
 /* 
     activation hook
 */
-function employee_activated(){
+function sel_activated(){
        
     flush_rewrite_rules();
 }
-register_activation_hook(__FILE__, 'employee_activated');
+register_activation_hook(__FILE__, 'sel_activated');
 
 /* 
     deactivate hook
 */
-function employee_deactivated(){
+function sel_deactivated(){
     
 }
-register_deactivation_hook(__FILE__, 'employee_deactivated');
+register_deactivation_hook(__FILE__, 'sel_deactivated');
 
 /* register employee custom post type */
-function employee_custom_post_type(){
+function sel_custom_post_type(){
     register_post_type( 'employee-post-type', array(
         'labels'                 => array(
             'name'               => __( 'Employees', 'employee'),
@@ -74,10 +74,10 @@ function employee_custom_post_type(){
             'supports'           => array('thumbnail'),
     ) );
 }
-add_action('init', 'employee_custom_post_type');
+add_action('init', 'sel_custom_post_type');
 
 //Register custom meta box
-function employee_custom_meta_boxes(){
+function sel_custom_meta_boxes(){
     add_meta_box(
         'employee-meta',
         esc_html__( 'Add Employee information', 'employee'),
@@ -128,7 +128,7 @@ function render_employees_field(){
 }
 
 //update meta box
-function employee_save_meta_box(){
+function sel_save_meta_box(){
     global $post ;
     if(isset($_POST["name"])):
         update_post_meta($post->ID, "name",
@@ -155,13 +155,13 @@ function employee_save_meta_box(){
         sanitize_text_field( $_POST["linkedin"]) );
     endif;
 }
-add_action('save_post', 'employee_save_meta_box');
+add_action('save_post', 'sel_save_meta_box');
 
-add_action('add_meta_boxes', 'employee_custom_meta_boxes' );
+add_action('add_meta_boxes', 'sel_custom_meta_boxes' );
 
 
 // Short Code Registration
-function employee_shortcode(){
+function sel_shortcode(){
     ob_start();
     $get_employee_fields = New WP_Query( array(
         'post_type'      => 'employee-post-type',    
@@ -209,4 +209,4 @@ function employee_shortcode(){
 
 }
 
-add_shortcode('employee', 'employee_shortcode') ?>
+add_shortcode('employee', 'sel_shortcode') ?>
