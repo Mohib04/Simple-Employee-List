@@ -81,14 +81,14 @@ function sel_custom_meta_boxes(){
     add_meta_box(
         'employee-meta',
         esc_html__( 'Add Employee information', 'employee'),
-        'render_employees_field',
+        'render_sel_field',
         'employee-post-type',
         'normal',
         'core'
      
     );
 }
-function render_employees_field(){
+function render_sel_field(){
 ?>
 <!-- Render Meta Box fields -->
 <form>
